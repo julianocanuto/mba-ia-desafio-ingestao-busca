@@ -8,6 +8,23 @@ This project implements a RAG (Retrieval-Augmented Generation) system that inges
 - Docker and Docker Compose
 - API Key for OpenAI or Google Gemini
 
+## Quick Start
+
+You can now run the entire application lifecycle with a single command:
+
+```bash
+python app.py
+```
+
+This script will:
+1. Spin up the Docker containers.
+2. Wait for the database to be healthy.
+3. Prompt you to add `document.pdf` to the root folder.
+4. Run the ingestion process.
+5. Start the chat interface.
+
+---
+
 ## Setup
 
 1. **Clone the repository** (if you haven't already).
@@ -27,7 +44,7 @@ This project implements a RAG (Retrieval-Augmented Generation) system that inges
 5. **Place your PDF**:
    Ensure there is a `document.pdf` file in the root directory.
 
-## Execution
+## Manual Execution (Advanced)
 
 ### 1. Ingest Data
 Run the ingestion script to process the PDF and store vectors in the database:

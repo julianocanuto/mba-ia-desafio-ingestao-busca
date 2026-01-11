@@ -1,6 +1,6 @@
 services:
   db:
-    image: pgvector/pgvector:latest
+    image: ankane/pgvector:latest
     ports:
       - "5432:5432"
     environment:

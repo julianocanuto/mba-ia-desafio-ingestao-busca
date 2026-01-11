@@ -48,30 +48,30 @@ def get_answer(question):
     retriever = vector_store.as_retriever(search_kwargs={"k": 10})
 
     template = """CONTEXT:
-{context}
+                    {context}
 
-RULES:
-- Answer ONLY based on the CONTEXT.
-- If the information is not explicitly in the CONTEXT, respond:
-  "Não tenho informações necessárias para responder sua pergunta."
-- Never hallucinate or use external knowledge.
-- Never provide opinions or interpretations beyond what is written.
+                    RULES:
+                    - Answer ONLY based on the CONTEXT.
+                    - If the information is not explicitly in the CONTEXT, respond:
+                    "Não tenho informações necessárias para responder sua pergunta."
+                    - Never hallucinate or use external knowledge.
+                    - Never provide opinions or interpretations beyond what is written.
 
-OUT-OF-CONTEXT EXAMPLES:
-Question: "What is the capital of France?"
-Response: "Não tenho informações necessárias para responder sua pergunta."
+                    OUT-OF-CONTEXT EXAMPLES:
+                    Question: "What is the capital of France?"
+                    Response: "Não tenho informações necessárias para responder sua pergunta."
 
-Question: "How many customers do we have in 2024?"
-Response: "Não tenho informações necessárias para responder sua pergunta."
+                    Question: "How many customers do we have in 2024?"
+                    Response: "Não tenho informações necessárias para responder sua pergunta."
 
-Question: "Do you think this is good or bad?"
-Response: "Não tenho informações necessárias para responder sua pergunta."
+                    Question: "Do you think this is good or bad?"
+                    Response: "Não tenho informações necessárias para responder sua pergunta."
 
-USER QUESTION:
-{question}
+                    USER QUESTION:
+                    {question}
 
-ANSWER THE "USER QUESTION"
-"""
+                    ANSWER THE "USER QUESTION"
+                    """
     prompt = PromptTemplate.from_template(template)
     llm = get_llm()
 
