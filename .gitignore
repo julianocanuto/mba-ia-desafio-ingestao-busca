@@ -1,0 +1,10 @@
+node_modules/
+venv/
+.env
+__pycache__/
+*.pdf
+!document.pdf
+
+.agents/
+.devcontainer/
+.agent/

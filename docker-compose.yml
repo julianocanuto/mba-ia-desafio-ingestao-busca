@@ -1,0 +1,26 @@
+services:
+  db:
+    image: pgvector/pgvector:latest
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: vectordb
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U user -d vectordb" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build:
+      context: .
+      dockerfile: .devcontainer/Dockerfile
+    volumes:
+      - .:/workspace
+    environment:
+      - DB_URL=postgresql+psycopg://user:password@db:5432/vectordb
+    depends_on:
+      db:
+        condition: service_healthy
