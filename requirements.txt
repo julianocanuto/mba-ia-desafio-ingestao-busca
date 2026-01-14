@@ -1,11 +1,9 @@
 langchain
-langchain-community
 langchain-openai
 langchain-google-genai
+langchain-community
 langchain-postgres
-langchain-text-splitters
-pypdf
+sentence-transformers
 psycopg[binary]
+pypdf
 python-dotenv
-browser-use
-rich

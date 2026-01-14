@@ -1,62 +1,35 @@
-# Ingestion and Semantic Search with LangChain and Postgres
+# Desafio de Ingestão e Busca Semântica
 
-This project implements a RAG (Retrieval-Augmented Generation) system that ingests PDF documents into a PostgreSQL database with `pgVector` and provides a CLI for semantic search.
+Este projeto é uma implementação de um sistema de RAG (Retrieval-Augmented Generation) como parte de um desafio de MBA.
 
-## Prerequisites
+## Funcionalidades
 
-- Python 3.10+
-- Docker and Docker Compose
-- API Key for OpenAI or Google Gemini
+- **Ingestão de Documentos**: Processamento e vetorização de arquivos PDF.
+- **Busca Semântica**: Recuperação de trechos relevantes baseada em similaridade.
+- **Chat Interativo**: Interface para perguntas e respostas sobre o documento.
 
-## Quick Start
+## Configuração
 
-You can now run the entire application lifecycle with a single command:
-
-```bash
-python app.py
-```
-
-This script will:
-1. Spin up the Docker containers.
-2. Wait for the database to be healthy.
-3. Prompt you to add `document.pdf` to the root folder.
-4. Run the ingestion process.
-5. Start the chat interface.
-
----
-
-## Setup
-
-1. **Clone the repository** (if you haven't already).
-2. **Install dependencies**:
+1. Clone o repositório.
+2. Copie `.env.example` para `.env` e configure suas chaves de API.
+3. Coloque seu arquivo PDF na raiz como `document.pdf`.
+4. Suba o banco de dados:
+   ```bash
+   docker-compose up -d
+   ```
+5. Instale as dependências:
    ```bash
    pip install -r requirements.txt
    ```
-3. **Configure Environment**:
-   Copy `.env.example` to `.env` and fill in your API keys and configuration.
+
+## Uso
+
+1. Realize a ingestão do documento:
    ```bash
-   cp .env.example .env
+   python src/ingest.py
    ```
-4. **Start Database**:
+
+2. Inicie o chat:
    ```bash
-   docker compose up -d
+   python src/chat.py
    ```
-5. **Place your PDF**:
-   Ensure there is a `document.pdf` file in the root directory.
-
-## Manual Execution (Advanced)
-
-### 1. Ingest Data
-Run the ingestion script to process the PDF and store vectors in the database:
-```bash
-python src/ingest.py
-```
-
-### 2. Chat with your PDF
-Start the CLI chat interface:
-```bash
-python src/chat.py
-```
-
-## Dev Container
-This project includes a `.devcontainer` configuration for VS Code, which sets up the entire environment (Python + PostgreSQL) automatically.

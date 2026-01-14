@@ -1,28 +1,47 @@
-import sys
-from search import get_answer
+import os
+from dotenv import load_dotenv
+from search import search
+from langchain_openai import ChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.runnables import RunnablePassthrough
+from langchain_core.output_parsers import StrOutputParser
 
-def main():
-    print("--- Bem-vindo ao Chat de Busca Semântica ---")
-    print("Digite 'sair' para encerrar.")
+load_dotenv()
+
+def get_llm():
+    if os.getenv("OPENAI_API_KEY"):
+        return ChatOpenAI(model="gpt-3.5-turbo")
+    elif os.getenv("GOOGLE_API_KEY"):
+        return ChatGoogleGenerativeAI(model="gemini-pro")
+    else:
+        raise ValueError("Nenhuma chave de API configurada")
+
+def chat_loop():
+    llm = get_llm()
     
+    template = """Responda à pergunta com base apenas no seguinte contexto:
+    {context}
+
+    Pergunta: {question}
+    """
+    prompt = ChatPromptTemplate.from_template(template)
+    
+    chain = (
+        {"context": lambda x: search(x), "question": RunnablePassthrough()}
+        | prompt
+        | llm
+        | StrOutputParser()
+    )
+
+    print("--- Chat Iniciado (Digite 'sair' para encerrar) ---")
     while True:
-        try:
-            user_input = input("\nPERGUNTA: ")
-            if user_input.lower() in ["sair", "exit", "quit"]:
-                print("Encerrando chat...")
-                break
-            
-            if not user_input.strip():
-                continue
-                
-            response = get_answer(user_input)
-            print(f"RESPOSTA: {response}")
-            
-        except KeyboardInterrupt:
-            print("\nEncerrando chat...")
+        question = input("\nVocê: ")
+        if question.lower() in ['sair', 'exit', 'quit']:
             break
-        except Exception as e:
-            print(f"Erro ao processar a pergunta: {e}")
+            
+        response = chain.invoke(question)
+        print(f"IA: {response}")
 
 if __name__ == "__main__":
-    main()
+    chat_loop()
