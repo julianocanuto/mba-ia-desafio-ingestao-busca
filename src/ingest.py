@@ -21,7 +21,7 @@ def ingest():
     loader = PyPDFLoader(pdf_path)
     docs = loader.load()
 
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=150)
     splits = text_splitter.split_documents(docs)
 
     embeddings = get_embeddings()
